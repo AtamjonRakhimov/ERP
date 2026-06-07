@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleFlow — Fashion ERP Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #fafafa;
+  --cream: #f5f0e8;
+  --gold: #c9a96e;
+  --gold-light: #e8d5b0;
+  --charcoal: #1a1a2e;
+  --accent: #e63946;
+  --gray: #6b7280;
+  --light-gray: #f3f4f6;
+  --sidebar-w: 260px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--black);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--charcoal);
+  min-height: 100vh;
+  position: fixed;
+  left: 0; top: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-right: 1px solid rgba(201,169,110,0.2);
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+}
+
+.sidebar-logo h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.sidebar-logo span {
+  display: block;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.sidebar-nav {
+  padding: 20px 0;
+  flex: 1;
+}
+
+.nav-section {
+  margin-bottom: 8px;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  padding: 8px 24px 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  font-weight: 400;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: rgba(201,169,110,0.08);
+  color: var(--gold);
+  border-left-color: var(--gold);
+}
+
+.nav-item.active {
+  background: rgba(201,169,110,0.12);
+  color: var(--gold);
+  border-left-color: var(--gold);
+  font-weight: 500;
+}
+
+.nav-item .icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-footer {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(201,169,110,0.15);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #a07840);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.user-info p { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
+.user-info span { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+/* MAIN */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+  background: white;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.topbar-left h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.topbar-left p {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 1px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-primary {
+  background: var(--charcoal);
+  color: white;
+}
+.btn-primary:hover { background: #2d2d4e; }
+
+.btn-gold {
+  background: var(--gold);
+  color: white;
+}
+.btn-gold:hover { background: #b8956a; }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: var(--black);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.badge {
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* PAGES */
+.page { display: none; padding: 32px; }
+.page.active { display: block; }
+
+/* DASHBOARD */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px 24px;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gold);
+}
+
+.stat-card.accent::after { background: var(--accent); }
+.stat-card.green::after { background: #10b981; }
+.stat-card.blue::after { background: #3b82f6; }
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.stat-change {
+  font-size: 12px;
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-change.down { color: var(--accent); }
+
+.stat-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  opacity: 0.12;
+}
+
+/* CHARTS ROW */
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.card-body { padding: 22px; }
+
+/* CHART BARS */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 160px;
+  padding-bottom: 8px;
+}
+
+.bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--gold) 0%, #a07840 100%);
+  transition: opacity 0.2s;
+  min-width: 24px;
+}
+
+.bar:hover { opacity: 0.8; }
+.bar.secondary { background: linear-gradient(180deg, #e5e7eb 0%, #d1d5db 100%); }
+
+.bar-label {
+  font-size: 10px;
+  color: var(--gray);
+  text-align: center;
+}
+
+/* DONUT */
+.donut-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.donut-svg { width: 120px; height: 120px; }
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.legend-left {
+  display: flex;
+  align-items: center;
+  color: var(--gray);
+}
+
+.legend-val {
+  font-weight: 600;
+  color: var(--black);
+}
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gray);
+  border-bottom: 1px solid #f3f4f6;
+  font-weight: 500;
+}
+
+tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f9fafb;
+  color: var(--black);
+}
+
+tbody tr:hover td { background: #fafafa; }
+tbody tr:last-child td { border-bottom: none; }
+
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-pill.delivered { background: #d1fae5; color: #065f46; }
+.status-pill.pending { background: #fef3c7; color: #92400e; }
+.status-pill.processing { background: #dbeafe; color: #1e40af; }
+.status-pill.cancelled { background: #fee2e2; color: #991b1b; }
+
+/* PRODUCT CARDS */
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-input {
+  padding: 9px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  width: 220px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus { border-color: var(--gold); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.product-img {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background: linear-gradient(135deg, #f5f0e8, #ede8d8);
+}
+
+.product-info { padding: 14px; }
+
+.product-category {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.product-stock {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.stock-low { color: var(--accent); }
+
+/* ORDERS */
+.orders-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--charcoal);
+  color: white;
+  border-color: var(--charcoal);
+}
+
+/* INVENTORY */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.inv-card {
+  background: white;
+  border-radius: 10px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+}
+
+.inv-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+
+.progress-bar {
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold), #c9a96e88);
+  transition: width 0.5s;
+}
+
+.progress-fill.low { background: linear-gradient(90deg, var(--accent), #e6394688); }
+.progress-fill.good { background: linear-gradient(90deg, #10b981, #10b98188); }
+
+.inv-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--gray);
+}
+
+/* CICD */
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.pipeline-step {
+  flex: 1;
+  padding: 18px 16px;
+  text-align: center;
+  position: relative;
+  border-right: 1px solid #f3f4f6;
+}
+
+.pipeline-step:last-child { border-right: none; }
+
+.pipeline-step.success { background: #f0fdf4; }
+.pipeline-step.running { background: #eff6ff; }
+.pipeline-step.pending { background: #fafafa; }
+.pipeline-step.failed { background: #fff1f2; }
+
+.step-icon { font-size: 24px; margin-bottom: 6px; }
+.step-name { font-size: 12px; font-weight: 600; color: var(--black); }
+.step-time { font-size: 11px; color: var(--gray); margin-top: 3px; }
+.step-status {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+.step-status.success { color: #10b981; }
+.step-status.running { color: #3b82f6; }
+.step-status.pending { color: var(--gray); }
+.step-status.failed { color: var(--accent); }
+
+.arrow { font-size: 18px; color: #d1d5db; margin: 0 -4px; z-index: 1; }
+
+.builds-list { display: flex; flex-direction: column; gap: 10px; }
+
+.build-item {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.build-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 50px;
+}
+
+.build-info { flex: 1; }
+.build-info h4 { font-size: 13px; font-weight: 600; }
+.build-info p { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+.build-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+/* AWS INFRA */
+.aws-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.aws-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  transition: transform 0.2s;
+}
+
+.aws-card:hover { transform: translateY(-2px); }
+
+.aws-service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.aws-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: linear-gradient(135deg, #ff9900, #ffb74d);
+}
+
+.aws-name { font-size: 14px; font-weight: 600; }
+.aws-region { font-size: 11px; color: var(--gray); }
+
+.aws-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.aws-metric {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.aws-metric strong { color: var(--black); font-size: 16px; }
+
+/* REPORTS */
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.report-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 22px;
+}
+
+.report-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.report-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.report-card p { font-size: 13px; color: var(--gray); margin-bottom: 16px; }
+
+/* NOTIFICATION */
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--charcoal);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 200;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* SETTINGS */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.settings-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 22px;
+}
+
+.settings-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+
+.form-row { margin-bottom: 14px; }
+.form-label { font-size: 12px; color: var(--gray); margin-bottom: 5px; display: block; }
+.form-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--gold); }
+
+/* SUPPLIERS */
+.supplier-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.supplier-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.supplier-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.supplier-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.supplier-card p { font-size: 12px; color: var(--gray); margin-bottom: 12px; }
+
+.supplier-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sup-stat {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.sup-stat-label { font-size: 10px; color: var(--gray); }
+.sup-stat-val { font-size: 14px; font-weight: 700; color: var(--black); }
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page.active { animation: fadeIn 0.3s ease; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>StyleFlow</h1>
+    <span>Fashion ERP System</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-title">Overview</div>
+      <a class="nav-item active" onclick="showPage('dashboard')">
+        <span class="icon">📊</span> Dashboard
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Commerce</div>
+      <a class="nav-item" onclick="showPage('products')">
+        <span class="icon">👗</span> Products
+      </a>
+      <a class="nav-item" onclick="showPage('orders')">
+        <span class="icon">📦</span> Orders
+        <span class="badge" style="margin-left:auto">14</span>
+      </a>
+      <a class="nav-item" onclick="showPage('inventory')">
+        <span class="icon">🏪</span> Inventory
+      </a>
+      <a class="nav-item" onclick="showPage('suppliers')">
+        <span class="icon">🤝</span> Suppliers
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">DevOps</div>
+      <a class="nav-item" onclick="showPage('cicd')">
+        <span class="icon">🔄</span> CI/CD Pipeline
+      </a>
+      <a class="nav-item" onclick="showPage('aws')">
+        <span class="icon">☁️</span> AWS Infrastructure
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Analytics</div>
+      <a class="nav-item" onclick="showPage('reports')">
+        <span class="icon">📈</span> Reports
+      </a>
+      <a class="nav-item" onclick="showPage('settings')">
+        <span class="icon">⚙️</span> Settings
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-badge">
+      <div class="user-avatar">MU</div>
+      <div class="user-info">
+        <p>Muhammad</p>
+        <span>ERP Admin</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar" id="topbar">
+    <div class="topbar-left">
+      <h2 id="page-title">Dashboard</h2>
+      <p id="page-sub">Welcome back, Muhammad 👋</p>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-outline" onclick="showNotif('🔄 Data refreshed!')">🔔 Alerts</button>
+      <button class="btn btn-gold" onclick="showNotif('✅ Report exported!')">+ New Order</button>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div class="page active" id="page-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value">$284K</div>
+        <div class="stat-change">↑ +12.5% this month</div>
+        <div class="stat-icon">💰</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value">1,847</div>
+        <div class="stat-change">↑ +8.2% this month</div>
+        <div class="stat-icon">📦</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Products Sold</div>
+        <div class="stat-value">5,293</div>
+        <div class="stat-change">↑ +15.1% this month</div>
+        <div class="stat-icon">👗</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-label">Active Customers</div>
+        <div class="stat-value">892</div>
+        <div class="stat-change down">↓ -2.3% this month</div>
+        <div class="stat-icon">👥</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="card">
+        <div class="card-header">
+          <h3>Monthly Sales</h3>
+          <select class="form-input" style="width:auto;padding:5px 10px;font-size:12px">
+            <option>2026</option><option>2025</option>
+          </select>
+        </div>
+        <div class="card-body">
+          <div class="chart-bars">
+            <div class="bar-group"><div class="bar" style="height:60%"></div><div class="bar-label">Jan</div></div>
+            <div class="bar-group"><div class="bar" style="height:75%"></div><div class="bar-label">Feb</div></div>
+            <div class="bar-group"><div class="bar" style="height:50%"></div><div class="bar-label">Mar</div></div>
+            <div class="bar-group"><div class="bar" style="height:90%"></div><div class="bar-label">Apr</div></div>
+            <div class="bar-group"><div class="bar" style="height:70%"></div><div class="bar-label">May</div></div>
+            <div class="bar-group"><div class="bar" style="height:85%"></div><div class="bar-label">Jun</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:40%"></div><div class="bar-label">Jul</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:30%"></div><div class="bar-label">Aug</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:20%"></div><div class="bar-label">Sep</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:15%"></div><div class="bar-label">Oct</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:10%"></div><div class="bar-label">Nov</div></div>
+            <div class="bar-group"><div class="bar secondary" style="height:5%"></div><div class="bar-label">Dec</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Category Split</h3></div>
+        <div class="card-body">
+          <div class="donut-chart">
+            <svg class="donut-svg" viewBox="0 0 42 42">
+              <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#c9a96e" stroke-width="6" stroke-dasharray="45 55" stroke-dashoffset="25"/>
+              <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#1a1a2e" stroke-width="6" stroke-dasharray="28 72" stroke-dashoffset="-20"/>
+              <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#e63946" stroke-width="6" stroke-dasharray="17 83" stroke-dashoffset="-48"/>
+              <circle cx="21" cy="21" r="15.9" fill="transparent" stroke="#10b981" stroke-width="6" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#c9a96e"></div>Dresses</div><div class="legend-val">45%</div></div>
+              <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#1a1a2e"></div>Suits</div><div class="legend-val">28%</div></div>
+              <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#e63946"></div>Accessories</div><div class="legend-val">17%</div></div>
+              <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#10b981"></div>Footwear</div><div class="legend-val">10%</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Recent Orders</h3>
+        <button class="btn btn-outline" onclick="showPage('orders')">View All →</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Products</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>#ORD-8841</td><td>Aliya Karimova</td><td>Summer Dress, Belt</td><td>$284.00</td><td>Jun 5, 2026</td><td><span class="status-pill delivered">Delivered</span></td></tr>
+            <tr><td>#ORD-8840</td><td>Bobur Yusupov</td><td>Business Suit</td><td>$520.00</td><td>Jun 5, 2026</td><td><span class="status-pill processing">Processing</span></td></tr>
+            <tr><td>#ORD-8839</td><td>Dilorom Nazarova</td><td>Silk Blouse × 2</td><td>$178.00</td><td>Jun 4, 2026</td><td><span class="status-pill pending">Pending</span></td></tr>
+            <tr><td>#ORD-8838</td><td>Jahongir Toshev</td><td>Sneakers, Cap</td><td>$142.00</td><td>Jun 4, 2026</td><td><span class="status-pill delivered">Delivered</span></td></tr>
+            <tr><td>#ORD-8837</td><td>Malika Ergasheva</td><td>Evening Gown</td><td>$395.00</td><td>Jun 3, 2026</td><td><span class="status-pill cancelled">Cancelled</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCTS ===== -->
+  <div class="page" id="page-products">
+    <div class="products-header">
+      <div class="search-bar">
+        <input class="search-input" placeholder="🔍 Search products...">
+        <button class="btn btn-outline">Filter</button>
+      </div>
+      <button class="btn btn-gold" onclick="showNotif('✅ Product added!')">+ Add Product</button>
+    </div>
+    <div class="products-grid">
+      <div class="product-card"><div class="product-img">👗</div><div class="product-info"><div class="product-category">Dresses</div><div class="product-name">Floral Summer Dress</div><div class="product-footer"><div class="product-price">$89.99</div><div class="product-stock">Stock: 142</div></div></div></div>
+      <div class="product-card"><div class="product-img">🧥</div><div class="product-info"><div class="product-category">Outerwear</div><div class="product-name">Classic Trench Coat</div><div class="product-footer"><div class="product-price">$245.00</div><div class="product-stock">Stock: 58</div></div></div></div>
+      <div class="product-card"><div class="product-img">👠</div><div class="product-info"><div class="product-category">Footwear</div><div class="product-name">Stiletto Heels</div><div class="product-footer"><div class="product-price">$129.99</div><div class="product-stock stock-low">Stock: 7 ⚠️</div></div></div></div>
+      <div class="product-card"><div class="product-img">👔</div><div class="product-info"><div class="product-category">Men's Wear</div><div class="product-name">Oxford Business Shirt</div><div class="product-footer"><div class="product-price">$74.99</div><div class="product-stock">Stock: 203</div></div></div></div>
+      <div class="product-card"><div class="product-img">👜</div><div class="product-info"><div class="product-category">Accessories</div><div class="product-name">Leather Handbag</div><div class="product-footer"><div class="product-price">$189.00</div><div class="product-stock">Stock: 34</div></div></div></div>
+      <div class="product-card"><div class="product-img">🧣</div><div class="product-info"><div class="product-category">Accessories</div><div class="product-name">Cashmere Scarf</div><div class="product-footer"><div class="product-price">$59.99</div><div class="product-stock stock-low">Stock: 12 ⚠️</div></div></div></div>
+      <div class="product-card"><div class="product-img">👒</div><div class="product-info"><div class="product-category">Accessories</div><div class="product-name">Wide-Brim Sun Hat</div><div class="product-footer"><div class="product-price">$44.99</div><div class="product-stock">Stock: 91</div></div></div></div>
+      <div class="product-card"><div class="product-img">🩱</div><div class="product-info"><div class="product-category">Swimwear</div><div class="product-name">One-Piece Swimsuit</div><div class="product-footer"><div class="product-price">$68.00</div><div class="product-stock">Stock: 156</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- ===== ORDERS ===== -->
+  <div class="page" id="page-orders">
+    <div class="orders-filters">
+      <button class="filter-btn active">All Orders (1,847)</button>
+      <button class="filter-btn" onclick="this.parentNode.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Pending (234)</button>
+      <button class="filter-btn" onclick="this.parentNode.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Processing (89)</button>
+      <button class="filter-btn" onclick="this.parentNode.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Delivered (1,421)</button>
+      <button class="filter-btn" onclick="this.parentNode.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Cancelled (103)</button>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>All Orders</h3><button class="btn btn-outline" onclick="showNotif('📥 Exported!')">Export CSV</button></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>#ORD-8841</td><td>Aliya Karimova</td><td>2 items</td><td>$284.00</td><td>Card</td><td>Jun 5</td><td><span class="status-pill delivered">Delivered</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8840</td><td>Bobur Yusupov</td><td>1 item</td><td>$520.00</td><td>Transfer</td><td>Jun 5</td><td><span class="status-pill processing">Processing</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8839</td><td>Dilorom Nazarova</td><td>2 items</td><td>$178.00</td><td>Card</td><td>Jun 4</td><td><span class="status-pill pending">Pending</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8838</td><td>Jahongir Toshev</td><td>2 items</td><td>$142.00</td><td>Cash</td><td>Jun 4</td><td><span class="status-pill delivered">Delivered</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8837</td><td>Malika Ergasheva</td><td>1 item</td><td>$395.00</td><td>Card</td><td>Jun 3</td><td><span class="status-pill cancelled">Cancelled</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8836</td><td>Sherzod Rakhimov</td><td>3 items</td><td>$612.00</td><td>Transfer</td><td>Jun 3</td><td><span class="status-pill delivered">Delivered</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+            <tr><td>#ORD-8835</td><td>Nodira Hasanova</td><td>1 item</td><td>$89.99</td><td>Card</td><td>Jun 2</td><td><span class="status-pill processing">Processing</span></td><td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INVENTORY ===== -->
+  <div class="page" id="page-inventory">
+    <div class="stats-grid" style="margin-bottom:20px">
+      <div class="stat-card"><div class="stat-label">Total SKUs</div><div class="stat-value">2,847</div><div class="stat-change">↑ 23 added this week</div></div>
+      <div class="stat-card accent"><div class="stat-label">Low Stock</div><div class="stat-value">47</div><div class="stat-change down">↑ Reorder needed</div></div>
+      <div class="stat-card green"><div class="stat-label">In Stock Value</div><div class="stat-value">$1.2M</div><div class="stat-change">↑ +5% vs last month</div></div>
+      <div class="stat-card blue"><div class="stat-label">Turnover Rate</div><div class="stat-value">4.2x</div><div class="stat-change">↑ Healthy</div></div>
+    </div>
+    <div class="inventory-grid">
+      <div class="inv-card"><h4>👗 Dresses</h4><div class="progress-bar"><div class="progress-fill good" style="width:82%"></div></div><div class="inv-meta"><span>1,240 units</span><span>82% stocked</span></div></div>
+      <div class="inv-card"><h4>🧥 Outerwear</h4><div class="progress-bar"><div class="progress-fill" style="width:58%"></div></div><div class="inv-meta"><span>348 units</span><span>58% stocked</span></div></div>
+      <div class="inv-card"><h4>👠 Footwear</h4><div class="progress-bar"><div class="progress-fill low" style="width:15%"></div></div><div class="inv-meta"><span>89 units</span><span style="color:var(--accent)">⚠️ 15% — Reorder!</span></div></div>
+      <div class="inv-card"><h4>👔 Men's Wear</h4><div class="progress-bar"><div class="progress-fill good" style="width:91%"></div></div><div class="inv-meta"><span>760 units</span><span>91% stocked</span></div></div>
+      <div class="inv-card"><h4>👜 Accessories</h4><div class="progress-bar"><div class="progress-fill" style="width:44%"></div></div><div class="inv-meta"><span>210 units</span><span>44% stocked</span></div></div>
+      <div class="inv-card"><h4>🩱 Swimwear</h4><div class="progress-bar"><div class="progress-fill low" style="width:22%"></div></div><div class="inv-meta"><span>156 units</span><span style="color:var(--accent)">⚠️ 22% — Low Stock</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>Stock Movements</h3><button class="btn btn-gold" onclick="showNotif('✅ Reorder placed!')">Reorder Low Stock</button></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>In Stock</th><th>Reserved</th><th>Available</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Floral Summer Dress</td><td>Dresses</td><td>DRS-001</td><td>142</td><td>12</td><td>130</td><td><span class="status-pill delivered">Good</span></td></tr>
+            <tr><td>Stiletto Heels</td><td>Footwear</td><td>FTW-042</td><td>7</td><td>3</td><td>4</td><td><span class="status-pill cancelled">Critical</span></td></tr>
+            <tr><td>Cashmere Scarf</td><td>Accessories</td><td>ACC-018</td><td>12</td><td>2</td><td>10</td><td><span class="status-pill pending">Low</span></td></tr>
+            <tr><td>Business Suit</td><td>Men's Wear</td><td>MNS-007</td><td>58</td><td>8</td><td>50</td><td><span class="status-pill delivered">Good</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUPPLIERS ===== -->
+  <div class="page" id="page-suppliers">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <p style="color:var(--gray);font-size:14px">12 active suppliers</p>
+      <button class="btn btn-gold" onclick="showNotif('✅ Supplier added!')">+ Add Supplier</button>
+    </div>
+    <div class="supplier-cards">
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#fef3c7">🏭</div><h4>Tashkent Textile Co.</h4><p>Uzbekistan • Cotton & Silk</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">248</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">96%</div></div></div></div>
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#dbeafe">🧵</div><h4>Istanbul Fashion Group</h4><p>Turkey • Premium Fabrics</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">184</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">91%</div></div></div></div>
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#f0fdf4">🪡</div><h4>Shanghai Threads Ltd.</h4><p>China • Mass Production</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">512</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">88%</div></div></div></div>
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#fce7f3">👟</div><h4>Milano Shoe Factory</h4><p>Italy • Luxury Footwear</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">97</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">99%</div></div></div></div>
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#ede9fe">💎</div><h4>Dubai Accessories Hub</h4><p>UAE • Jewelry & Bags</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">143</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">94%</div></div></div></div>
+      <div class="supplier-card"><div class="supplier-avatar" style="background:#fef9c3">🌿</div><h4>Samarkand Silk House</h4><p>Uzbekistan • Natural Silk</p><div class="supplier-stats"><div class="sup-stat"><div class="sup-stat-label">Orders</div><div class="sup-stat-val">76</div></div><div class="sup-stat"><div class="sup-stat-label">On-time</div><div class="sup-stat-val">100%</div></div></div></div>
+    </div>
+  </div>
+
+  <!-- ===== CI/CD ===== -->
+  <div class="page" id="page-cicd">
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-header"><h3>🔄 Active Pipeline — StyleFlow v2.4.1</h3><span class="status-pill processing">Running</span></div>
+      <div class="card-body" style="padding:16px">
+        <div class="pipeline">
+          <div class="pipeline-step success"><div class="step-icon">📥</div><div class="step-name">Source</div><div class="step-time">GitHub Push</div><div class="step-status success">✓ Done</div></div>
+          <div class="pipeline-step success"><div class="step-icon">🔨</div><div class="step-name">Build</div><div class="step-time">2m 14s</div><div class="step-status success">✓ Done</div></div>
+          <div class="pipeline-step success"><div class="step-icon">🧪</div><div class="step-name">Test</div><div class="step-time">1m 42s</div><div class="step-status success">✓ Done</div></div>
+          <div class="pipeline-step success"><div class="step-icon">🐳</div><div class="step-name">Docker</div><div class="step-time">1m 08s</div><div class="step-status success">✓ Done</div></div>
+          <div class="pipeline-step running"><div class="step-icon">☁️</div><div class="step-name">Deploy AWS</div><div class="step-time">Running...</div><div class="step-status running">⟳ Active</div></div>
+          <div class="pipeline-step pending"><div class="step-icon">✅</div><div class="step-name">Health Check</div><div class="step-time">Waiting</div><div class="step-status pending">— Pending</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-header"><h3>GitHub Actions Workflow</h3><button class="btn btn-outline" onclick="showNotif('🔄 Pipeline triggered!')">▶ Run Pipeline</button></div>
+      <div class="card-body">
+        <pre style="background:#0a0a0a;color:#c9a96e;padding:20px;border-radius:8px;font-size:12px;overflow-x:auto;line-height:1.7">
+<span style="color:#888"># .github/workflows/deploy.yml</span>
+<span style="color:#4ade80">name:</span> StyleFlow CI/CD Pipeline
+
+<span style="color:#4ade80">on:</span>
+  push:
+    branches: [main, develop]
+
+<span style="color:#4ade80">jobs:</span>
+  <span style="color:#60a5fa">build-and-deploy:</span>
+    runs-on: ubuntu-latest
+    steps:
+      - <span style="color:#4ade80">name:</span> Checkout Code
+        uses: actions/checkout@v3
+
+      - <span style="color:#4ade80">name:</span> Setup Node.js
+        uses: actions/setup-node@v3
+        with: { node-version: '18' }
+
+      - <span style="color:#4ade80">name:</span> Install & Build
+        run: |
+          npm install
+          npm run build
+
+      - <span style="color:#4ade80">name:</span> Run Tests
+        run: npm test
+
+      - <span style="color:#4ade80">name:</span> Build Docker Image
+        run: |
+          docker build -t styleflow-erp:${{ github.sha }} .
+          docker tag styleflow-erp:${{ github.sha }} \
+            ${{ secrets.ECR_REGISTRY }}/styleflow-erp:latest
+
+      - <span style="color:#4ade80">name:</span> Push to AWS ECR
+        run: docker push ${{ secrets.ECR_REGISTRY }}/styleflow-erp:latest
+
+      - <span style="color:#4ade80">name:</span> Deploy to AWS ECS
+        run: |
+          aws ecs update-service \
+            --cluster styleflow-prod \
+            --service styleflow-erp \
+            --force-new-deployment</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>Recent Builds</h3></div>
+      <div class="card-body">
+        <div class="builds-list">
+          <div class="build-item"><div class="build-num">#247</div><div class="build-info"><h4>feat: Add inventory auto-reorder</h4><p>main ← feature/auto-reorder • Muhammad U.</p></div><div class="build-meta"><span class="status-pill processing">Running</span><span>2 min ago</span></div></div>
+          <div class="build-item"><div class="build-num">#246</div><div class="build-info"><h4>fix: Order status update bug</h4><p>main ← hotfix/order-status • Muhammad U.</p></div><div class="build-meta"><span class="status-pill delivered">Success</span><span>1h ago • 4m 32s</span></div></div>
+          <div class="build-item"><div class="build-num">#245</div><div class="build-info"><h4>feat: ERP dashboard improvements</h4><p>main ← feature/dashboard-v2 • Muhammad U.</p></div><div class="build-meta"><span class="status-pill delivered">Success</span><span>3h ago • 5m 12s</span></div></div>
+          <div class="build-item"><div class="build-num">#244</div><div class="build-info"><h4>test: Add unit tests for inventory</h4><p>develop • Muhammad U.</p></div><div class="build-meta"><span class="status-pill cancelled">Failed</span><span>5h ago • 2m 08s</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== AWS ===== -->
+  <div class="page" id="page-aws">
+    <div class="aws-grid">
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🌐</div><div><div class="aws-name">EC2 Instance</div><div class="aws-region">us-east-1 • t3.medium</div></div></div><div class="aws-status"><div class="status-dot"></div>Running</div><div class="aws-metric">CPU: <strong>34%</strong> &nbsp;|&nbsp; RAM: <strong>2.1GB</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🗄️</div><div><div class="aws-name">RDS PostgreSQL</div><div class="aws-region">us-east-1 • db.t3.small</div></div></div><div class="aws-status"><div class="status-dot"></div>Running</div><div class="aws-metric">Connections: <strong>47</strong> &nbsp;|&nbsp; Storage: <strong>18GB</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">⚖️</div><div><div class="aws-name">Load Balancer</div><div class="aws-region">Application LB</div></div></div><div class="aws-status"><div class="status-dot"></div>Active</div><div class="aws-metric">Requests: <strong>1.2K/min</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🪣</div><div><div class="aws-name">S3 Bucket</div><div class="aws-region">styleflow-assets</div></div></div><div class="aws-status"><div class="status-dot"></div>Available</div><div class="aws-metric">Objects: <strong>8,421</strong> &nbsp;|&nbsp; Size: <strong>12.4GB</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🚀</div><div><div class="aws-name">CloudFront CDN</div><div class="aws-region">Global Edge</div></div></div><div class="aws-status"><div class="status-dot"></div>Active</div><div class="aws-metric">Cache Hit: <strong>94%</strong> &nbsp;|&nbsp; Latency: <strong>18ms</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🔒</div><div><div class="aws-name">VPC + Security</div><div class="aws-region">10.0.0.0/16</div></div></div><div class="aws-status"><div class="status-dot"></div>Secured</div><div class="aws-metric">Subnets: <strong>4</strong> &nbsp;|&nbsp; Rules: <strong>28</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">📦</div><div><div class="aws-name">ECS Fargate</div><div class="aws-region">styleflow-prod cluster</div></div></div><div class="aws-status"><div class="status-dot"></div>Running</div><div class="aws-metric">Tasks: <strong>3/3</strong> &nbsp;|&nbsp; CPU: <strong>0.5 vCPU</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">📊</div><div><div class="aws-name">CloudWatch</div><div class="aws-region">Monitoring</div></div></div><div class="aws-status"><div class="status-dot"></div>Logging</div><div class="aws-metric">Alarms: <strong>0 active</strong> &nbsp;|&nbsp; Logs: <strong>2.1M</strong></div></div>
+      <div class="aws-card"><div class="aws-service"><div class="aws-icon">🔄</div><div><div class="aws-name">Auto Scaling</div><div class="aws-region">Min:2 Max:10</div></div></div><div class="aws-status"><div class="status-dot"></div>Healthy</div><div class="aws-metric">Current: <strong>3 instances</strong></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3>AWS Architecture Diagram</h3></div>
+      <div class="card-body">
+        <div style="background:#0a0a0a;border-radius:10px;padding:24px;font-size:12px;color:#ccc;line-height:2.2;font-family:monospace">
+          <div style="color:#ff9900;font-weight:bold;margin-bottom:12px">☁️ AWS Cloud — us-east-1</div>
+          <div style="margin-left:16px">
+            <div style="color:#4ade80">┌─── VPC (10.0.0.0/16) ─────────────────────────────┐</div>
+            <div style="margin-left:16px">
+              <div>│  <span style="color:#60a5fa">Internet Gateway</span> → <span style="color:#c9a96e">CloudFront CDN</span></div>
+              <div>│  <span style="color:#60a5fa">Public Subnet</span>  → [ALB Load Balancer] → ECS Tasks</div>
+              <div>│  <span style="color:#60a5fa">Private Subnet</span> → [RDS PostgreSQL] (Multi-AZ)</div>
+              <div>│  <span style="color:#60a5fa">Private Subnet</span> → [ElastiCache Redis]</div>
+              <div>│  <span style="color:#f87171">NAT Gateway</span>    → Outbound traffic</div>
+            </div>
+            <div style="color:#4ade80">└───────────────────────────────────────────────────┘</div>
+            <div style="margin-top:8px">
+              <div><span style="color:#c9a96e">S3</span> ← Static assets (images, CSS, JS)</div>
+              <div><span style="color:#c9a96e">ECR</span> ← Docker images repository</div>
+              <div><span style="color:#c9a96e">Route 53</span> ← DNS → styleflow-erp.com</div>
+              <div><span style="color:#c9a96e">CloudWatch</span> ← Logs, Metrics, Alarms</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REPORTS ===== -->
+  <div class="page" id="page-reports">
+    <div class="reports-grid">
+      <div class="report-card"><div class="report-icon">💰</div><h3>Sales Report</h3><p>Monthly and quarterly revenue breakdown by category, region, and channel.</p><button class="btn btn-primary" onclick="showNotif('📊 Generating report...')">Generate Report</button></div>
+      <div class="report-card"><div class="report-icon">📦</div><h3>Inventory Report</h3><p>Stock levels, turnover rates, and reorder recommendations for all SKUs.</p><button class="btn btn-primary" onclick="showNotif('📊 Generating report...')">Generate Report</button></div>
+      <div class="report-card"><div class="report-icon">👥</div><h3>Customer Report</h3><p>Customer acquisition, retention, lifetime value, and churn analysis.</p><button class="btn btn-primary" onclick="showNotif('📊 Generating report...')">Generate Report</button></div>
+      <div class="report-card"><div class="report-icon">🤝</div><h3>Supplier Report</h3><p>Supplier performance, on-time delivery rates, and quality metrics.</p><button class="btn btn-primary" onclick="showNotif('📊 Generating report...')">Generate Report</button></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>Quick Analytics</h3></div>
+      <div class="card-body">
+        <div class="chart-bars">
+          <div class="bar-group"><div class="bar" style="height:65%"></div><div class="bar-label">Jan</div></div>
+          <div class="bar-group"><div class="bar" style="height:80%"></div><div class="bar-label">Feb</div></div>
+          <div class="bar-group"><div class="bar" style="height:55%"></div><div class="bar-label">Mar</div></div>
+          <div class="bar-group"><div class="bar" style="height:95%"></div><div class="bar-label">Apr</div></div>
+          <div class="bar-group"><div class="bar" style="height:75%"></div><div class="bar-label">May</div></div>
+          <div class="bar-group"><div class="bar" style="height:88%"></div><div class="bar-label">Jun</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS ===== -->
+  <div class="page" id="page-settings">
+    <div class="settings-grid">
+      <div class="settings-card"><h3>⚙️ Company Settings</h3>
+        <div class="form-row"><label class="form-label">Company Name</label><input class="form-input" value="StyleFlow Fashion LLC"></div>
+        <div class="form-row"><label class="form-label">Region</label><input class="form-input" value="Tashkent, Uzbekistan"></div>
+        <div class="form-row"><label class="form-label">Currency</label><input class="form-input" value="USD ($)"></div>
+        <button class="btn btn-gold" onclick="showNotif('✅ Settings saved!')">Save Changes</button>
+      </div>
+      <div class="settings-card"><h3>☁️ AWS Configuration</h3>
+        <div class="form-row"><label class="form-label">AWS Region</label><input class="form-input" value="us-east-1"></div>
+        <div class="form-row"><label class="form-label">ECS Cluster</label><input class="form-input" value="styleflow-prod"></div>
+        <div class="form-row"><label class="form-label">S3 Bucket</label><input class="form-input" value="styleflow-assets-prod"></div>
+        <button class="btn btn-primary" onclick="showNotif('✅ AWS config updated!')">Update Config</button>
+      </div>
+      <div class="settings-card"><h3>🔄 CI/CD Settings</h3>
+        <div class="form-row"><label class="form-label">GitHub Repo</label><input class="form-input" value="muhammad/styleflow-erp"></div>
+        <div class="form-row"><label class="form-label">Deploy Branch</label><input class="form-input" value="main"></div>
+        <div class="form-row"><label class="form-label">Docker Registry</label><input class="form-input" value="ECR — us-east-1"></div>
+        <button class="btn btn-outline" onclick="showNotif('🔄 Pipeline tested!')">Test Pipeline</button>
+      </div>
+      <div class="settings-card"><h3>👤 User Settings</h3>
+        <div class="form-row"><label class="form-label">Full Name</label><input class="form-input" value="Muhammad Umarov"></div>
+        <div class="form-row"><label class="form-label">Email</label><input class="form-input" value="muhammad@styleflow.com"></div>
+        <div class="form-row"><label class="form-label">Role</label><input class="form-input" value="ERP Administrator"></div>
+        <button class="btn btn-outline" onclick="showNotif('✅ Profile updated!')">Update Profile</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notif">
+  <span id="notif-text"></span>
+</div>
+
+<script>
+const pages = {
+  dashboard: { title: 'Dashboard', sub: 'Welcome back, Muhammad 👋' },
+  products: { title: 'Products', sub: 'Manage your fashion catalog' },
+  orders: { title: 'Orders', sub: 'Track and manage all orders' },
+  inventory: { title: 'Inventory', sub: 'Stock levels and management' },
+  suppliers: { title: 'Suppliers', sub: 'Supplier relationships' },
+  cicd: { title: 'CI/CD Pipeline', sub: 'GitHub Actions → AWS deployment' },
+  aws: { title: 'AWS Infrastructure', sub: 'Cloud resources and monitoring' },
+  reports: { title: 'Reports & Analytics', sub: 'Business intelligence' },
+  settings: { title: 'Settings', sub: 'System configuration' },
+};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+      n.classList.add('active');
+    }
+  });
+  document.getElementById('page-title').textContent = pages[id].title;
+  document.getElementById('page-sub').textContent = pages[id].sub;
+}
+
+let notifTimer;
+function showNotif(msg) {
+  const el = document.getElementById('notif');
+  document.getElementById('notif-text').textContent = msg;
+  el.classList.add('show');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
